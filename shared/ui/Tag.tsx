@@ -1,4 +1,4 @@
-import { ITag } from "@/utils/store/Tags";
+import { ITag } from "@/shared/utils/store/Tags";
 import React from "react";
 
 type Props = { tag: ITag };

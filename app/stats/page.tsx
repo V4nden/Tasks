@@ -1,5 +1,5 @@
 "use client";
-import History from "@/utils/store/History";
+import History from "@/shared/utils/store/History";
 import { observer } from "mobx-react-lite";
 import moment from "moment";
 import React, { useEffect, useState } from "react";

@@ -1,6 +1,6 @@
-import History from "@/utils/store/History";
-import Tags from "@/utils/store/Tags";
-import Tasks from "@/utils/store/Tasks";
+import History from "@/shared/utils/store/History";
+import Tags from "@/shared/utils/store/Tags";
+import Tasks from "@/shared/utils/store/Tasks";
 import React, { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
 

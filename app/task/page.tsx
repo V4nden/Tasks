@@ -1,9 +1,9 @@
 "use client";
-import IconSelector from "@/components/ui/IconSelector";
-import Input from "@/components/ui/Input";
-import Tag from "@/components/ui/Tag";
-import Tags from "@/utils/store/Tags";
-import Tasks, { ITask } from "@/utils/store/Tasks";
+import IconSelector from "@/shared/ui/IconSelector";
+import Input from "@/shared/ui/Input";
+import Tag from "@/shared/ui/Tag";
+import Tags from "@/shared/utils/store/Tags";
+import Tasks, { ITask } from "@/shared/utils/store/Tasks";
 import { observer } from "mobx-react-lite";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";

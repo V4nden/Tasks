@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
 import * as Fa from "react-icons/fa";
 import Input from "./Input";
-import iconFromId from "../../utils/iconFromId";
+import iconFromId from "../utils/iconFromId";
 import { observer } from "mobx-react-lite";
-import Tags from "@/utils/store/Tags";
+import Tags from "@/shared/utils/store/Tags";
 import uuid4 from "uuid4";
 type Props = {};
 

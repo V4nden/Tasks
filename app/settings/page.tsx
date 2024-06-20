@@ -1,11 +1,11 @@
 "use client";
-import ExportData from "@/components/ExportData";
-import ImportData from "@/components/ImportData";
-import IconSelector from "@/components/ui/IconSelector";
-import Input from "@/components/ui/Input";
-import Tag from "@/components/ui/Tag";
-import Tags from "@/utils/store/Tags";
-import Tasks, { ITask } from "@/utils/store/Tasks";
+import ExportData from "@/widgets/Settings/ExportData";
+import ImportData from "@/widgets/Settings/ImportData";
+import IconSelector from "@/shared/ui/IconSelector";
+import Input from "@/shared/ui/Input";
+import Tag from "@/shared/ui/Tag";
+import Tags from "@/shared/utils/store/Tags";
+import Tasks, { ITask } from "@/shared/utils/store/Tasks";
 import { observer } from "mobx-react-lite";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";

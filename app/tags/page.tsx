@@ -1,9 +1,9 @@
 "use client";
-import CreateTag from "@/components/ui/CreateTag";
-import IconSelector from "@/components/ui/IconSelector";
-import Input from "@/components/ui/Input";
-import Tag from "@/components/ui/Tag";
-import Tags from "@/utils/store/Tags";
+import CreateTag from "@/shared/ui/CreateTag";
+import IconSelector from "@/shared/ui/IconSelector";
+import Input from "@/shared/ui/Input";
+import Tag from "@/shared/ui/Tag";
+import Tags from "@/shared/utils/store/Tags";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";

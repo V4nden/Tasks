@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
 import * as Fa from "react-icons/fa";
 import Input from "./Input";
-import iconFromId from "../../utils/iconFromId";
+import iconFromId from "../utils/iconFromId";
 type Props = {
   onSelected: Function;
 };

@@ -1,6 +1,6 @@
 "use client";
-import Task from "@/components/Task/Task";
-import Tasks from "@/utils/store/Tasks";
+import Task from "@/widgets/Task/Task";
+import Tasks from "@/shared/utils/store/Tasks";
 import { AnimatePresence, motion } from "framer-motion";
 import { observer } from "mobx-react-lite";
 import { useRouter } from "next/navigation";
