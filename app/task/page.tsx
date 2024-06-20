@@ -4,8 +4,9 @@ import Input from "@/components/ui/Input";
 import Tag from "@/components/ui/Tag";
 import Tags from "@/utils/store/Tags";
 import Tasks, { ITask } from "@/utils/store/Tasks";
+import { motion } from "framer-motion";
 import { observer } from "mobx-react-lite";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as Fa from "react-icons/fa";
@@ -13,20 +14,31 @@ import uuid4 from "uuid4";
 type Props = {};
 
 const page = observer((props: Props) => {
-  const [taskForm, setTaskForm] = useState<ITask>({
-    name: "",
-    description: "",
-    color: "#64748b",
-    time: "12:00",
-    tags: [],
-    icon: "FaInfo",
-    id: uuid4(),
-    priority: 100,
-  });
+  const id = useSearchParams().get("id");
+  const [taskForm, setTaskForm] = useState<ITask>(
+    //@ts-ignore
+    Tasks.getTaskById(id)
+      ? //@ts-ignore
+        Tasks.getTaskById(id)
+      : {
+          name: "",
+          description: "",
+          color: "#64748b",
+          time: "12:00",
+          tags: [],
+          icon: "FaInfo",
+          id: uuid4(),
+          priority: 100,
+        }
+  );
+
   const router = useRouter();
+
   return (
     <main className="gap-2 text-zinc-100 flex items-center flex-col p-4">
-      <h1 className="text-2xl text-zinc-100  font-bold">Create new task</h1>
+      <h1 className="text-2xl text-zinc-100  font-bold">
+        {Tasks.hasTask(taskForm.id) ? "Edit task" : "Create task"}
+      </h1>
       <h2 className="text-sm text-zinc-500 font-bold">{taskForm.id}</h2>
       <div className="flex gap-2 w-full">
         <Input
@@ -186,7 +198,10 @@ const page = observer((props: Props) => {
       </div>
       <button
         onClick={(e) => {
-          Tasks.createTask(taskForm);
+          Tasks.hasTask(taskForm.id)
+            ? Tasks.editTask(taskForm.id, taskForm)
+            : Tasks.createTask(taskForm);
+
           router.push("/");
         }}
         className="p-2 border border-zinc-800 w-full rounded-xl"

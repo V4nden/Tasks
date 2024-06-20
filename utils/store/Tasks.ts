@@ -12,6 +12,7 @@ export interface ITask {
   icon: string;
   id: string;
   priority: number;
+  onetime?: boolean;
 }
 
 class Tasks {
@@ -37,6 +38,16 @@ class Tasks {
   }
   fromImported(data: any) {
     this.tasks = data["TasksStore"]["tasks"];
+  }
+  hasTask(id: string): boolean {
+    return this.tasks.some((el) => {
+      return el.id == id;
+    });
+  }
+  getTaskById(id: string): ITask | undefined {
+    return this.tasks.find((el) => {
+      return el.id == id;
+    });
   }
 }
 

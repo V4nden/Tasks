@@ -151,7 +151,7 @@ const TaskActions = observer((props: Props) => {
                 <button
                   className="rounded-full p-4 bg-black/50"
                   onTouchEnd={(e) => {
-                    router.push("/task/edit?id=" + props.task.id);
+                    router.push("/task?id=" + props.task.id);
                   }}
                 >
                   <Fa.FaPen size={18} />

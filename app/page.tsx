@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaAlignLeft, FaArrowLeft, FaPlus } from "react-icons/fa";
 import { FaCircleLeft, FaCircleRight, FaLeftLong } from "react-icons/fa6";
+import uuid4 from "uuid4";
 
 type Props = {};
 
@@ -99,10 +100,10 @@ const page = observer((props: Props) => {
       <button
         onClick={(e) => {
           if (page == 0) {
-            router.replace("/task");
+            router.replace("/task?id=" + uuid4());
           }
           if (page == 1) {
-            router.replace("/task");
+            router.replace("/task?id=" + uuid4());
           }
         }}
         className="p-4 flex items-center justify-center fixed bottom-16 right-0 m-4 rounded-full bg-zinc-950/50 backdrop-blur-sm border border-zinc-800 z-20"
