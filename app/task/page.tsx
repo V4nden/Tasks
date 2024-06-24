@@ -1,22 +1,54 @@
 "use client";
+import SwipeContainer from "@/components/SwipeContainer";
 import TaskPage from "@/components/Task/TaskPage";
-import IconSelector from "@/components/ui/IconSelector";
-import Input from "@/components/ui/Input";
-import Tag from "@/components/ui/Tag";
-import Tags from "@/utils/store/Tags";
 import Tasks, { ITask } from "@/utils/store/Tasks";
-import { motion } from "framer-motion";
 import { observer } from "mobx-react-lite";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import * as Fa from "react-icons/fa";
-import uuid4 from "uuid4";
+
 type Props = {};
 
 const page = observer((props: Props) => {
   const id = useSearchParams().get("id");
-  return <TaskPage id={String(id)} />;
+  const type = useSearchParams().get("type");
+  if (type && ["scheduled", "unscheduled", "onetime"].includes(type)) {
+    return (
+      <main className="flex flex-col overflow-y-hidden items-center gap-1 pt-4">
+        <h1 className="text-2xl text-zinc-100  font-bold">
+          {Tasks.hasTask(String(id)) ? "Edit task" : "Create task"}
+        </h1>
+        <h2 className="text-sm text-zinc-400 font-bold">{id}</h2>
+        <SwipeContainer
+          className="min-h-screen"
+          noSwipe={Tasks.hasTask(String(id))}
+          titleClassName="p-0 pb-2 text-zinc-500"
+          selectedFrame={["scheduled", "unscheduled", "onetime"].indexOf(type)}
+        >
+          {/* @ts-ignore */}
+          {[
+            "Scheduled",
+            <TaskPage id={String(id)} type={"scheduled"} key={"scheduled"} />,
+          ]}
+          {/* @ts-ignore */}
+          {[
+            "Unscheduled",
+            <TaskPage
+              id={String(id)}
+              type={"unscheduled"}
+              key={"unscheduled"}
+            />,
+          ]}
+          {/* @ts-ignore */}
+          {[
+            "Onetime",
+            <TaskPage id={String(id)} type={"onetime"} key={"onetime"} />,
+          ]}
+        </SwipeContainer>
+      </main>
+    );
+  } else {
+    return <div></div>;
+  }
 });
 
 export default page;

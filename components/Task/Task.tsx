@@ -27,7 +27,6 @@ const Task = (props: Props) => {
   //@ts-ignore
   const Icon = Fa[props.icon];
   const [pressed, setPressed] = useState(0);
-  const router = useRouter();
   const [actionsVisible, setActionsVisible] = useState(false);
 
   return (

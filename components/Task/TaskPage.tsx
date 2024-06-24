@@ -1,41 +1,42 @@
 import Tasks, { ITask } from "@/utils/store/Tasks";
 import { observer } from "mobx-react-lite";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import uuid4 from "uuid4";
 import Input from "../ui/Input";
 import Tags from "@/utils/store/Tags";
 import Tag from "../ui/Tag";
 import * as Fa from "react-icons/fa";
 import IconSelector from "../ui/IconSelector";
-type Props = { id: string };
+type Props = { id: string; type: "scheduled" | "unscheduled" | "onetime" };
 
 const TaskPage = observer((props: Props) => {
-  const [taskForm, setTaskForm] = useState<ITask>(
+  const defaultValues = (): ITask => {
     //@ts-ignore
-    Tasks.getTaskById(props.id)
+    return Tasks.getTaskById(props.id)
       ? //@ts-ignore
         Tasks.getTaskById(props.id)
       : {
           name: "",
           description: "",
           color: "#64748b",
-          time: "12:00",
+          time: props.type != "unscheduled" && "12:00",
           tags: [],
           icon: "FaInfo",
           id: props.id,
           priority: 100,
-        }
-  );
+          type: props.type,
+        };
+  };
+  const [taskForm, setTaskForm] = useState<ITask>(defaultValues());
+  useEffect(() => {
+    setTaskForm(defaultValues());
+  }, [props]);
 
   const router = useRouter();
 
   return (
-    <main className="gap-2 text-zinc-100 flex items-center flex-col p-4">
-      <h1 className="text-2xl text-zinc-100  font-bold">
-        {Tasks.hasTask(taskForm.id) ? "Edit task" : "Create task"}
-      </h1>
-      <h2 className="text-sm text-zinc-500 font-bold">{taskForm.id}</h2>
+    <div className="gap-2 text-zinc-100 flex items-center flex-col p-4">
       <div className="flex gap-2 w-full">
         <Input
           placeholder="Task name"
@@ -92,25 +93,30 @@ const TaskPage = observer((props: Props) => {
           );
         })}
       </div>
-      <div className="flex items-center w-full gap-1">
-        <Input
-          value={taskForm.time ? taskForm.time : "14:12"}
-          disabled={!taskForm.time}
-          onChange={(e) => {
-            setTaskForm({ ...taskForm, time: e.currentTarget.value });
-          }}
-          type="time"
-          className="w-full"
-        />
-        <Input
-          type="checkbox"
-          checked={!!taskForm.time}
-          onChange={(e) => {
-            setTaskForm({ ...taskForm, time: taskForm.time ? null : "12:00" });
-          }}
-          className="w-8 h-8 p-2"
-        />
-      </div>
+      {taskForm.type != "unscheduled" && (
+        <div className="flex items-center w-full gap-1">
+          <Input
+            value={taskForm.time ? taskForm.time : "14:12"}
+            disabled={!taskForm.time}
+            onChange={(e) => {
+              setTaskForm({ ...taskForm, time: e.currentTarget.value });
+            }}
+            type="time"
+            className="w-full"
+          />
+          <Input
+            type="checkbox"
+            checked={!!taskForm.time}
+            onChange={(e) => {
+              setTaskForm({
+                ...taskForm,
+                time: taskForm.time ? null : "12:00",
+              });
+            }}
+            className="w-8 h-8 p-2"
+          />
+        </div>
+      )}
       <div className="flex flex-wrap border gap-2 w-full p-2 rounded-xl border-zinc-800">
         {Tags.tags.map((tag) => {
           return (
@@ -204,7 +210,7 @@ const TaskPage = observer((props: Props) => {
       >
         Submit
       </button>
-    </main>
+    </div>
   );
 });
 

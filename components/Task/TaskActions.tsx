@@ -47,7 +47,7 @@ const TaskActions = observer((props: Props) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="absolute top-0 touch-none flex flex-wrap items-center justify-center left-0 text-zinc-100 bg-black/75 z-10 w-full h-full"
+          className="absolute top-0 touch-none rounded-xl flex flex-wrap items-center justify-center left-0 text-zinc-100 bg-black/75 z-10 w-full h-full"
           onTouchStart={(e) => {
             setSwipe(e.changedTouches[0].clientY);
           }}
@@ -139,6 +139,8 @@ const TaskActions = observer((props: Props) => {
                     <button
                       onTouchEnd={(e) => {
                         History.completeTask(props.task, dates[selectedDate]);
+                        props.task.type == "onetime" &&
+                          Tasks.deleteTask(props.task);
                         props.setVisible(false);
                       }}
                       className="rounded-full p-4 bg-black/50"
@@ -151,7 +153,9 @@ const TaskActions = observer((props: Props) => {
                 <button
                   className="rounded-full p-4 bg-black/50"
                   onTouchEnd={(e) => {
-                    router.push("/task?id=" + props.task.id);
+                    router.push(
+                      `/task?id=${props.task.id}&type=${props.task.type}`
+                    );
                   }}
                 >
                   <Fa.FaPen size={18} />

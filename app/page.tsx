@@ -28,10 +28,13 @@ const page = observer((props: Props) => {
       <SwipeContainer className="min-h-screen" containerClassName="p-4">
         {[
           "Scheduled",
-          <div className="flex-col gap-2 overflow-y-scrol flex">
+          <div
+            key={"scheduled"}
+            className="flex-col gap-2 overflow-y-scrol flex"
+          >
             {Tasks.tasks
               .slice()
-              .filter((el) => el.time)
+              .filter((el) => el.type == "scheduled")
               .sort(
                 (a, b) =>
                   //@ts-ignore
@@ -50,10 +53,25 @@ const page = observer((props: Props) => {
         ]}
         {[
           "Uncheduled",
-          <div className="flex-col gap-2 overflow-y-scrol flex">
+          <div
+            key={"uncheduled"}
+            className="flex-col gap-2 overflow-y-scrol flex"
+          >
             {Tasks.tasks
               .slice()
-              .filter((el) => !el.time)
+              .filter((el) => el.type == "unscheduled")
+              .sort((a, b) => a.priority - b.priority)
+              .map((task) => (
+                <Task {...task} key={task.id} />
+              ))}
+          </div>,
+        ]}
+        {[
+          "Onetime",
+          <div key={"onetime"} className="flex-col gap-2 overflow-y-scrol flex">
+            {Tasks.tasks
+              .slice()
+              .filter((el) => el.type == "onetime")
               .sort((a, b) => a.priority - b.priority)
               .map((task) => (
                 <Task {...task} key={task.id} />
@@ -64,7 +82,7 @@ const page = observer((props: Props) => {
 
       <button
         onClick={(e) => {
-          router.replace("/task?id=" + uuid4());
+          router.replace("/task?id=" + uuid4() + "&type=scheduled");
         }}
         className="p-4 flex items-center justify-center fixed bottom-16 right-0 m-4 rounded-full bg-zinc-950/50 backdrop-blur-sm border border-zinc-800 z-20"
       >

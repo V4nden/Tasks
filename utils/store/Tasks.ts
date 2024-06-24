@@ -12,7 +12,7 @@ export interface ITask {
   icon: string;
   id: string;
   priority: number;
-  onetime?: boolean;
+  type: "scheduled" | "unscheduled" | "onetime";
 }
 
 class Tasks {
