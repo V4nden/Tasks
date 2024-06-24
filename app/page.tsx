@@ -1,4 +1,5 @@
 "use client";
+import SwipeContainer from "@/components/SwipeContainer";
 import Task from "@/components/Task/Task";
 import Tasks from "@/utils/store/Tasks";
 import { AnimatePresence, motion } from "framer-motion";
@@ -21,47 +22,13 @@ const page = observer((props: Props) => {
   useEffect(() => {
     console.log(Tasks.tasks);
   }, []);
-  const [start, setStart] = useState(0);
-  const pages = ["Scheduled", "To-do"];
   const router = useRouter();
-  const [page, setPage] = useState(0);
   return (
-    <main
-      className="min-h-screen p-4 mb-14 mt-10"
-      onTouchStart={(e) => {
-        setStart(e.touches[0].clientX);
-      }}
-      onTouchEnd={(e) => {
-        if (
-          start - window.screen.availWidth / 4 >=
-          e.changedTouches[0].clientX
-        ) {
-          setPage(page + 1 <= pages.length - 1 ? page + 1 : page);
-        }
-        if (
-          start + window.screen.availWidth / 4 <=
-          e.changedTouches[0].clientX
-        ) {
-          setPage(page - 1 >= 0 ? page - 1 : page);
-        }
-        setStart(0);
-      }}
-    >
-      <div className="border-b fixed top-0 left-0 border-zinc-800 text-zinc-100 w-full flex items-center bg-zinc-950 z-10 justify-center p-2">
-        <h1 className="font-bold text-xl">{pages[page]}</h1>
-      </div>
-      <AnimatePresence mode="wait">
-        {page == 0 && (
-          <motion.div
-            key={"scheduled"}
-            {...animations}
-            transition={{
-              ease: [0.2, 1, 0.2, 1],
-              duration: 0.2,
-              staggerChildren: 0.5,
-            }}
-            className="flex-col gap-2 overflow-y-scrol flex"
-          >
+    <main className="min-h-screen mb-14">
+      <SwipeContainer className="min-h-screen" containerClassName="p-4">
+        {[
+          "Scheduled",
+          <div className="flex-col gap-2 overflow-y-scrol flex">
             {Tasks.tasks
               .slice()
               .filter((el) => el.time)
@@ -79,14 +46,11 @@ const page = observer((props: Props) => {
               .map((task) => (
                 <Task {...task} key={task.id} />
               ))}
-          </motion.div>
-        )}
-        {page == 1 && (
-          <motion.div
-            key={"todo"}
-            {...animations}
-            className="flex-col gap-2 overflow-y-scrol flex"
-          >
+          </div>,
+        ]}
+        {[
+          "Uncheduled",
+          <div className="flex-col gap-2 overflow-y-scrol flex">
             {Tasks.tasks
               .slice()
               .filter((el) => !el.time)
@@ -94,17 +58,13 @@ const page = observer((props: Props) => {
               .map((task) => (
                 <Task {...task} key={task.id} />
               ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>,
+        ]}
+      </SwipeContainer>
+
       <button
         onClick={(e) => {
-          if (page == 0) {
-            router.replace("/task?id=" + uuid4());
-          }
-          if (page == 1) {
-            router.replace("/task?id=" + uuid4());
-          }
+          router.replace("/task?id=" + uuid4());
         }}
         className="p-4 flex items-center justify-center fixed bottom-16 right-0 m-4 rounded-full bg-zinc-950/50 backdrop-blur-sm border border-zinc-800 z-20"
       >

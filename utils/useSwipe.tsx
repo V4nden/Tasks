@@ -6,6 +6,8 @@ const useSwipe = (ref: React.RefObject<HTMLDivElement>) => {
   let touchWhen = 0;
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
+  const [mx, setMX] = useState(0);
+  const [my, setMY] = useState(0);
   const [est, setEst] = useState(0);
   useEffect(() => {
     if (!ref.current) return;
@@ -15,19 +17,26 @@ const useSwipe = (ref: React.RefObject<HTMLDivElement>) => {
       xTouchStart = e.touches[0].clientX;
       yTouchStart = e.touches[0].clientY;
     });
+    ref.current.addEventListener("touchmove", (e) => {
+      setMX(e.changedTouches[0].clientX - xTouchStart);
+      setMY(yTouchStart - e.changedTouches[0].clientY);
+    });
     ref.current.addEventListener("touchend", (e) => {
       setX(e.changedTouches[0].clientX - xTouchStart);
+      setMX(0);
       setY(yTouchStart - e.changedTouches[0].clientY);
+      setMY(0);
       setEst(Date.now() - touchWhen);
     });
 
     return () => {
       ref.current?.removeEventListener("touchstart", () => {});
       ref.current?.removeEventListener("touchend", () => {});
+      ref.current?.removeEventListener("touchmove", () => {});
     };
   }, [ref.current]);
 
-  return { x, y, est };
+  return { x, y, mx, my, est };
 };
 
 export default useSwipe;
