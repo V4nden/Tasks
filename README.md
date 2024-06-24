@@ -20,9 +20,9 @@ Tasks is a mobile application designed to help you remember and plan your daily 
 **TO-DO**
 
 - [ ] FSD refactoring
-- [ ] Improve task typing
+- [X] Improve task typing
 - [ ] Move to zustand instead of mobx
-- [ ] One-time tasks
+- [X] One-time tasks
 - [ ] Sort and filter by tags, priority or time
 - [ ] Notifications
 - [ ] Home screen widget
