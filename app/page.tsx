@@ -28,7 +28,7 @@ const page = observer((props: Props) => {
       <SwipeContainer className="min-h-screen" containerClassName="p-4">
         {[
           "Scheduled",
-          <div
+          <motion.div
             key={"scheduled"}
             className="flex-col gap-2 overflow-y-scrol flex"
           >
@@ -49,11 +49,11 @@ const page = observer((props: Props) => {
               .map((task) => (
                 <Task {...task} key={task.id} />
               ))}
-          </div>,
+          </motion.div>,
         ]}
         {[
           "Uncheduled",
-          <div
+          <motion.div
             key={"uncheduled"}
             className="flex-col gap-2 overflow-y-scrol flex"
           >
@@ -64,11 +64,14 @@ const page = observer((props: Props) => {
               .map((task) => (
                 <Task {...task} key={task.id} />
               ))}
-          </div>,
+          </motion.div>,
         ]}
         {[
           "Onetime",
-          <div key={"onetime"} className="flex-col gap-2 overflow-y-scrol flex">
+          <motion.div
+            key={"onetime"}
+            className="flex-col gap-2 overflow-y-scrol flex"
+          >
             {Tasks.tasks
               .slice()
               .filter((el) => el.type == "onetime")
@@ -76,7 +79,7 @@ const page = observer((props: Props) => {
               .map((task) => (
                 <Task {...task} key={task.id} />
               ))}
-          </div>,
+          </motion.div>,
         ]}
       </SwipeContainer>
 

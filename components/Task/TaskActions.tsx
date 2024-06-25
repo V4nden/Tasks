@@ -1,6 +1,11 @@
 import History from "@/utils/store/History";
 import Tasks, { ITask } from "@/utils/store/Tasks";
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import {
+  AnimatePresence,
+  AnimationControls,
+  motion,
+  useAnimation,
+} from "framer-motion";
 import { observer } from "mobx-react-lite";
 import moment, { Moment } from "moment";
 import * as Fa from "react-icons/fa";
@@ -8,7 +13,12 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
 
-type Props = { task: ITask; visible: boolean; setVisible: Function };
+type Props = {
+  task: ITask;
+  visible: boolean;
+  setVisible: Function;
+  animate: AnimationControls;
+};
 
 const TaskActions = observer((props: Props) => {
   const router = useRouter();
@@ -19,7 +29,7 @@ const TaskActions = observer((props: Props) => {
   const [swipe, setSwipe] = useState(0);
   const animation = useAnimation();
 
-  const changeDate = (how: number) => {
+  function changeDate(how: number) {
     if (!dates) return;
     animation.start({ x: -how * 30, opacity: 0 }).then(() => {
       animation.set({ x: how * 30 });
@@ -30,7 +40,16 @@ const TaskActions = observer((props: Props) => {
       );
       animation.start({ x: 0, opacity: 1 });
     });
-  };
+  }
+  function deleteTask() {
+    props.setVisible(false);
+    props.animate.set({ lineHeight: 0, display: "block", border: 0 });
+    props.animate
+      .start({ height: 0, paddingTop: 0, paddingBottom: 0 })
+      .then(() => {
+        Tasks.deleteTask(props.task);
+      });
+  }
   useEffect(() => {
     let datessnap: Moment[] = [];
     for (let i = -8; i <= 7; i++) {
@@ -139,8 +158,7 @@ const TaskActions = observer((props: Props) => {
                     <button
                       onTouchEnd={(e) => {
                         History.completeTask(props.task, dates[selectedDate]);
-                        props.task.type == "onetime" &&
-                          Tasks.deleteTask(props.task);
+                        props.task.type == "onetime" && deleteTask();
                         props.setVisible(false);
                       }}
                       className="rounded-full p-4 bg-black/50"
@@ -163,7 +181,7 @@ const TaskActions = observer((props: Props) => {
                 <button
                   className="rounded-full p-4 bg-black/50"
                   onTouchEnd={(e) => {
-                    Tasks.deleteTask(props.task);
+                    deleteTask();
                     props.setVisible(false);
                   }}
                 >

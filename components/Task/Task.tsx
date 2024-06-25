@@ -1,11 +1,16 @@
 import Tasks, { ITask } from "@/utils/store/Tasks";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Tag from "../ui/Tag";
 import * as Fa from "react-icons/fa";
 import moment from "moment";
 import { FaX } from "react-icons/fa6";
 import History from "@/utils/store/History";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useAnimate,
+  useAnimation,
+} from "framer-motion";
 import { useRouter } from "next/navigation";
 import Tags from "@/utils/store/Tags";
 import TaskActions from "./TaskActions";
@@ -24,6 +29,8 @@ const Task = (props: Props) => {
       return false;
     }
   };
+  const animate = useAnimation();
+
   //@ts-ignore
   const Icon = Fa[props.icon];
   const [pressed, setPressed] = useState(0);
@@ -32,9 +39,9 @@ const Task = (props: Props) => {
   return (
     <motion.div
       key={props.id}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className={`border rounded-xl p-4 border-zinc-800 flex select-none relative flex-col gap-2 justify-center transition-all ease-out`}
+      animate={animate}
+      transition={{ duration: 0.3, ease: [0, 1, 0, 1] }}
+      className={`border rounded-xl p-4 overflow-hidden border-zinc-800 flex select-none relative flex-col gap-2 justify-center transition-all ease-out`}
       onTouchStart={(e) => {
         setPressed(Date.now());
       }}
@@ -87,6 +94,7 @@ const Task = (props: Props) => {
       )}
 
       <TaskActions
+        animate={animate}
         task={props}
         setVisible={setActionsVisible}
         visible={actionsVisible}
