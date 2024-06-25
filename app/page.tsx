@@ -20,12 +20,15 @@ const animations = {
 
 const page = observer((props: Props) => {
   useEffect(() => {
+    document.oncontextmenu = (e) => {
+      e.preventDefault();
+    };
     console.log(Tasks.tasks);
   }, []);
   const router = useRouter();
   return (
-    <main className="min-h-screen mb-14">
-      <SwipeContainer className="min-h-screen" containerClassName="p-4">
+    <main>
+      <SwipeContainer className="min-h-screen pb-16" containerClassName="p-4">
         {[
           "Scheduled",
           <motion.div
