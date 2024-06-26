@@ -53,7 +53,6 @@ const SwipeContainer = (props: Props) => {
       } else if (x < -60) {
         changeSelection(1);
       }
-    console.log(x);
   }, [x]);
 
   return (

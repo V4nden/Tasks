@@ -40,7 +40,6 @@ const ImportData = (props: Props) => {
           <button
             onClick={(e) => {
               const parsed = JSON.parse(decodeURIComponent(atob(data)));
-              console.log(JSON.parse(decodeURIComponent(atob(data))));
               History.fromImported(parsed);
               Tasks.fromImported(parsed);
               Tags.fromImported(parsed);

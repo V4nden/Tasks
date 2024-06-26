@@ -14,8 +14,11 @@ import {
 import { useRouter } from "next/navigation";
 import Tags from "@/utils/store/Tags";
 import TaskActions from "./TaskActions";
+import { twMerge } from "tw-merge";
 
-interface Props extends ITask {}
+interface Props extends ITask {
+  className?: string;
+}
 
 const Task = (props: Props) => {
   const diff = () => {
@@ -40,8 +43,13 @@ const Task = (props: Props) => {
     <motion.div
       key={props.id}
       animate={animate}
+      layout="position"
       transition={{ duration: 0.3, ease: [0, 1, 0, 1] }}
-      className={`border rounded-xl p-4 overflow-hidden border-zinc-800 flex select-none relative flex-col gap-2 justify-center transition-all ease-out`}
+      className={twMerge(
+        `border rounded-xl p-4 overflow-hidden border-zinc-800 flex select-none relative flex-col gap-2 justify-center transition-all ease-out ${
+          props.className && props.className
+        }`
+      )}
       onTouchStart={(e) => {
         setPressed(Date.now());
       }}
