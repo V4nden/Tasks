@@ -19,7 +19,7 @@ const Popup = (props: Props) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: [0, 1, 0, 1] }}
-          className="absolute top-0 left-0 w-full h-full p-4 z-50 bg-zinc-950/30 backdrop-blur-md flex flex-col gap-4"
+          className="fixed touch-none top-0 left-0 w-full h-full p-4 z-50 bg-zinc-950/30 backdrop-blur-md flex flex-col gap-4"
         >
           <div className="flex justify-between items-center">
             <h1 className="text-zinc-100 font-bold text-xl">{props.title}</h1>
