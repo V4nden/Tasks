@@ -10,8 +10,9 @@ import { observer } from "mobx-react-lite";
 import moment, { Moment } from "moment";
 import * as Fa from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
+import { TasksPageActions } from "./TasksPage/TasksPage";
 
 type Props = {
   task: ITask;
@@ -171,9 +172,11 @@ const TaskActions = observer((props: Props) => {
                 <button
                   className="rounded-full p-4 bg-black/50"
                   onTouchEnd={(e) => {
-                    router.push(
-                      `/task?id=${props.task.id}&type=${props.task.type}`
-                    );
+                    TasksPageActions.setTask({
+                      id: props.task.id,
+                      type: props.task.type,
+                    });
+                    props.setVisible(false);
                   }}
                 >
                   <Fa.FaPen size={18} />

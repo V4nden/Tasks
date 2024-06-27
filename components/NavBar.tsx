@@ -8,7 +8,7 @@ type Props = {};
 const NavBar = (props: Props) => {
   const router = useRouter();
   return (
-    <div className="fixed z-50 bg-zinc-950/75 backdrop-blur-sm border-zinc-800 bottom-0 left-0 flex items-center justify-around w-full p-4 border-t-2 text-zinc-50">
+    <div className="fixed z-20 bg-zinc-950/75 backdrop-blur-sm border-zinc-800 bottom-0 left-0 flex items-center justify-around w-full p-4 border-t-2 text-zinc-50">
       <button
         onClick={() => {
           router.push("/");

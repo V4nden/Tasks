@@ -7,12 +7,9 @@ import { useRouter } from "next/navigation";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FaPlus, FaTag } from "react-icons/fa";
 import uuid4 from "uuid4";
-import { ITasksActions } from "./TasksPage";
+import { TasksPageActions } from "./TasksPage";
 
-type Props = {
-  setTasksActions: Dispatch<SetStateAction<ITasksActions>>;
-  tasksActions: ITasksActions;
-};
+type Props = { selectedType: "scheduled" | "unscheduled" | "onetime" };
 
 const TasksActions = observer((props: Props) => {
   const router = useRouter();
@@ -27,12 +24,12 @@ const TasksActions = observer((props: Props) => {
     }
   }, [x]);
   function switchFilter(tag: string) {
-    if (props.tasksActions.filter.includes(tag)) {
-      props.setTasksActions({
-        filter: [...props.tasksActions.filter.filter((el) => el != tag)],
-      });
+    if (TasksPageActions.filter.includes(tag)) {
+      TasksPageActions.setFilter(
+        TasksPageActions.filter.filter((el) => el != tag)
+      );
     } else {
-      props.setTasksActions({ filter: [...props.tasksActions.filter, tag] });
+      TasksPageActions.setFilter([...TasksPageActions.filter, tag]);
     }
   }
   return (
@@ -58,7 +55,7 @@ const TasksActions = observer((props: Props) => {
                     onClick={() => switchFilter(el.id)}
                     style={{ backgroundColor: el.color }}
                     className={`rounded-full transition-all ease-out ${
-                      !props.tasksActions.filter.includes(el.id) &&
+                      !TasksPageActions.filter.includes(el.id) &&
                       "brightness-75"
                     }`}
                   >
@@ -75,7 +72,10 @@ const TasksActions = observer((props: Props) => {
           onClick={(e) => {
             opened
               ? setOpened(false)
-              : router.replace("/task?id=" + uuid4() + "&type=scheduled");
+              : TasksPageActions.setTask({
+                  id: uuid4(),
+                  type: props.selectedType,
+                });
           }}
           className={`rounded-full transition-all border-zinc-800 p-4  ${
             !opened && "bg-zinc-950/50 backdrop-blur-sm border"

@@ -8,9 +8,10 @@ import Tags from "@/utils/store/Tags";
 import Tag from "../ui/Tag";
 import * as Fa from "react-icons/fa";
 import IconSelector from "../ui/IconSelector";
+import { TasksPageActions } from "./TasksPage/TasksPage";
 type Props = { id: string; type: "scheduled" | "unscheduled" | "onetime" };
 
-const TaskPage = observer((props: Props) => {
+const TasksModification = observer((props: Props) => {
   const defaultValues = (): ITask => {
     //@ts-ignore
     return Tasks.getTaskById(props.id)
@@ -31,18 +32,26 @@ const TaskPage = observer((props: Props) => {
   const [taskForm, setTaskForm] = useState<ITask>(defaultValues());
   useEffect(() => {
     setTaskForm(defaultValues());
+    console.log(props.type);
   }, [props]);
 
   const router = useRouter();
 
   return (
-    <div className="gap-2 text-zinc-100 flex items-center flex-col p-4">
+    <div className="gap-2 text-zinc-100 flex items-center flex-col">
+      <Input
+        placeholder="Task name"
+        value={taskForm.name}
+        onChange={(e) => {
+          setTaskForm({ ...taskForm, name: e.currentTarget.value });
+        }}
+      />
       <div className="flex gap-2 w-full">
         <Input
-          placeholder="Task name"
-          value={taskForm.name}
+          placeholder="Short description"
+          value={taskForm.description}
           onChange={(e) => {
-            setTaskForm({ ...taskForm, name: e.currentTarget.value });
+            setTaskForm({ ...taskForm, description: e.currentTarget.value });
           }}
         />
         <IconSelector
@@ -51,14 +60,8 @@ const TaskPage = observer((props: Props) => {
           }}
         />
       </div>
-      <Input
-        placeholder="Short description"
-        value={taskForm.description}
-        onChange={(e) => {
-          setTaskForm({ ...taskForm, description: e.currentTarget.value });
-        }}
-      />
-      <div className="flex border flex-wrap gap-2 justify-center p-2 rounded-xl border-zinc-800">
+
+      <div className="flex bg-zinc-950 border flex-wrap gap-2 justify-center p-2 rounded-xl border-zinc-800">
         {[
           "#ffffff",
           "#64748b",
@@ -117,7 +120,7 @@ const TaskPage = observer((props: Props) => {
           />
         </div>
       )}
-      <div className="flex flex-wrap border gap-2 w-full p-2 rounded-xl border-zinc-800">
+      <div className="flex flex-wrap border gap-2 w-full p-2 bg-zinc-950 rounded-xl border-zinc-800">
         {Tags.tags.map((tag) => {
           return (
             <button
@@ -141,7 +144,7 @@ const TaskPage = observer((props: Props) => {
           );
         })}
       </div>
-      <div className="p-2 border border-zinc-800 w-full rounded-xl">
+      <div className="p-2 border border-zinc-800 bg-zinc-950 w-full rounded-xl">
         <p className="text-sm text-zinc-400 text-center">
           Priotity: {taskForm.priority}%
         </p>
@@ -204,9 +207,9 @@ const TaskPage = observer((props: Props) => {
             ? Tasks.editTask(taskForm.id, taskForm)
             : Tasks.createTask(taskForm);
 
-          router.push("/");
+          TasksPageActions.setTask(null);
         }}
-        className="p-2 border border-zinc-800 w-full rounded-xl"
+        className="p-2 border bg-zinc-950 border-zinc-800 w-full rounded-xl"
       >
         Submit
       </button>
@@ -214,4 +217,4 @@ const TaskPage = observer((props: Props) => {
   );
 });
 
-export default TaskPage;
+export default TasksModification;
