@@ -1,20 +1,14 @@
-import Tasks, { ITask } from "@/utils/store/Tasks";
+import { ITask } from "@/utils/store/Tasks";
 import React, { useEffect, useState } from "react";
 import Tag from "../ui/Tag";
 import * as Fa from "react-icons/fa";
 import moment from "moment";
-import { FaX } from "react-icons/fa6";
 import History from "@/utils/store/History";
-import {
-  AnimatePresence,
-  motion,
-  useAnimate,
-  useAnimation,
-} from "framer-motion";
-import { useRouter } from "next/navigation";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import Tags from "@/utils/store/Tags";
 import TaskActions from "./TaskActions";
 import { twMerge } from "tw-merge";
+import useSwipe from "@/utils/useSwipe";
 
 interface Props extends ITask {
   className?: string;
@@ -22,10 +16,10 @@ interface Props extends ITask {
 
 const Task = (props: Props) => {
   const diff = () => {
-    if (props.time) {
+    if (props.type.type == "scheduled") {
       const now = moment();
-      now.set("hour", parseInt(props.time.split(":")[0]));
-      now.set("minute", parseInt(props.time.split(":")[1]));
+      now.set("hour", parseInt(props.type.time.split(":")[0]));
+      now.set("minute", parseInt(props.type.time.split(":")[1]));
       now.set("second", 0);
       return now.diff(moment(), "minutes");
     } else {
@@ -38,9 +32,18 @@ const Task = (props: Props) => {
   const Icon = Fa[props.icon];
   const [pressed, setPressed] = useState(0);
   const [actionsVisible, setActionsVisible] = useState(false);
+  const ref = React.createRef<HTMLDivElement>();
+  const { est, my } = useSwipe(ref);
+  useEffect(() => {
+    if (!actionsVisible && est > 500 && Math.abs(my) < 40) {
+      navigator.vibrate(100);
+      setActionsVisible(!actionsVisible);
+    }
+  }, [est]);
 
   return (
     <motion.div
+      ref={ref}
       key={props.id}
       animate={animate}
       layout="position"
@@ -50,20 +53,11 @@ const Task = (props: Props) => {
           props.className && props.className
         }`
       )}
-      onTouchStart={(e) => {
-        setPressed(Date.now());
-      }}
-      onTouchEnd={(e) => {
-        if (!actionsVisible && pressed < Date.now() - 500) {
-          navigator.vibrate(100);
-          setActionsVisible(!actionsVisible);
-        }
-      }}
     >
       <div className="flex items-center gap-2 flex-wrap relative">
         <Icon fill="#fff" size={14} />
         <div className="text-zinc-100 font-bold text-xl">{props.name}</div>
-        {typeof diff() == "number" && (
+        {props.type.type == "scheduled" && (
           <div
             style={{
               backgroundColor: `${
@@ -74,7 +68,7 @@ const Task = (props: Props) => {
             className="text-zinc-100 font-bold text-sm flex gap-1 items-center justify-center border border-zinc-800 w-fit p-0.5 px-1 rounded-xl"
           >
             <Fa.FaClock />
-            {props.time}
+            {props.type.time}
           </div>
         )}
         <div

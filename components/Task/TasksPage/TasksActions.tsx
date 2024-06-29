@@ -4,12 +4,15 @@ import useSwipe from "@/utils/useSwipe";
 import { AnimatePresence, motion } from "framer-motion";
 import { observer } from "mobx-react-lite";
 import { useRouter } from "next/navigation";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlus, FaTag } from "react-icons/fa";
 import uuid4 from "uuid4";
 import { TasksPageActions } from "./TasksPage";
+import { TaskType } from "@/utils/store/Tasks";
 
-type Props = { selectedType: "scheduled" | "unscheduled" | "onetime" };
+type Props = {
+  selectedType: TaskType;
+};
 
 const TasksActions = observer((props: Props) => {
   const router = useRouter();

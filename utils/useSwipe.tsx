@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const useSwipe = (ref: React.RefObject<HTMLDivElement>) => {
   let xTouchStart = 0;
@@ -9,11 +9,13 @@ const useSwipe = (ref: React.RefObject<HTMLDivElement>) => {
   const [mx, setMX] = useState(0);
   const [my, setMY] = useState(0);
   const [est, setEst] = useState(0);
+  const [touch, setTouch] = useState([0, 0]);
   useEffect(() => {
     if (!ref.current) return;
 
     ref.current.addEventListener("touchstart", (e) => {
       touchWhen = Date.now();
+      setTouch([e.touches[0].clientX, e.touches[0].clientY]);
       xTouchStart = e.touches[0].clientX;
       yTouchStart = e.touches[0].clientY;
     });
@@ -36,7 +38,7 @@ const useSwipe = (ref: React.RefObject<HTMLDivElement>) => {
     };
   }, [ref.current]);
 
-  return { x, y, mx, my, est };
+  return { x, y, mx, my, est, touch };
 };
 
 export default useSwipe;

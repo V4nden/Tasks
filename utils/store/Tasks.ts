@@ -1,18 +1,33 @@
 "use client";
 import { makeAutoObservable } from "mobx";
-import { ITag } from "./Tags";
 import { makePersistable } from "mobx-persist-store";
+
+export interface IScheduledTaskType {
+  time: string;
+  type: "scheduled";
+}
+export interface IUnscheduledTaskType {
+  type: "unscheduled";
+}
+export interface IOnetimeTaskType {
+  date: string;
+  type: "onetime";
+}
+
+export type TaskType =
+  | IScheduledTaskType
+  | IUnscheduledTaskType
+  | IOnetimeTaskType;
 
 export interface ITask {
   name: string;
   description: string;
   color: string;
-  time: string | null;
   tags: string[];
   icon: string;
   id: string;
   priority: number;
-  type: "scheduled" | "unscheduled" | "onetime";
+  type: TaskType;
 }
 
 class Tasks {

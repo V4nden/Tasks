@@ -1,13 +1,12 @@
 "use client";
 
 import useSwipe from "@/utils/useSwipe";
-import { motion, useAnimation, useScroll } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import React, {
   Dispatch,
   HTMLProps,
   SetStateAction,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import { twMerge } from "tw-merge";
@@ -67,9 +66,9 @@ const SwipeContainer = (props: Props) => {
   }
   useEffect(() => {
     if (!props.noSwipe)
-      if (x > 60) {
+      if (x > 40) {
         changeSelection(-1);
-      } else if (x < -60) {
+      } else if (x < -40) {
         changeSelection(1);
       }
   }, [x]);

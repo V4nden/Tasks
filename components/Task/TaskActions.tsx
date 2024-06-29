@@ -10,7 +10,7 @@ import { observer } from "mobx-react-lite";
 import moment, { Moment } from "moment";
 import * as Fa from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
 import { TasksPageActions } from "./TasksPage/TasksPage";
 
@@ -159,7 +159,7 @@ const TaskActions = observer((props: Props) => {
                     <button
                       onTouchEnd={(e) => {
                         History.completeTask(props.task, dates[selectedDate]);
-                        props.task.type == "onetime" && deleteTask();
+                        props.task.type.type == "onetime" && deleteTask();
                         props.setVisible(false);
                       }}
                       className="rounded-full p-4 bg-black/50"

@@ -1,15 +1,17 @@
-import Tasks, { ITask } from "@/utils/store/Tasks";
+import Tasks, { ITask, TaskType } from "@/utils/store/Tasks";
 import { observer } from "mobx-react-lite";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import uuid4 from "uuid4";
+import { useEffect, useState } from "react";
 import Input from "../ui/Input";
 import Tags from "@/utils/store/Tags";
 import Tag from "../ui/Tag";
 import * as Fa from "react-icons/fa";
 import IconSelector from "../ui/IconSelector";
 import { TasksPageActions } from "./TasksPage/TasksPage";
-type Props = { id: string; type: "scheduled" | "unscheduled" | "onetime" };
+type Props = {
+  id: string;
+  type: TaskType;
+};
 
 const TasksModification = observer((props: Props) => {
   const defaultValues = (): ITask => {
@@ -21,7 +23,6 @@ const TasksModification = observer((props: Props) => {
           name: "",
           description: "",
           color: "#64748b",
-          time: props.type != "unscheduled" && "12:00",
           tags: [],
           icon: "FaInfo",
           id: props.id,
@@ -96,27 +97,19 @@ const TasksModification = observer((props: Props) => {
           );
         })}
       </div>
-      {taskForm.type != "unscheduled" && (
+      {taskForm.type.type == "scheduled" && (
         <div className="flex items-center w-full gap-1">
           <Input
-            value={taskForm.time ? taskForm.time : "14:12"}
-            disabled={!taskForm.time}
-            onChange={(e) => {
-              setTaskForm({ ...taskForm, time: e.currentTarget.value });
-            }}
-            type="time"
-            className="w-full"
-          />
-          <Input
-            type="checkbox"
-            checked={!!taskForm.time}
+            value={taskForm.type.time ? taskForm.type.time : "14:12"}
+            disabled={!taskForm.type.time}
             onChange={(e) => {
               setTaskForm({
                 ...taskForm,
-                time: taskForm.time ? null : "12:00",
+                type: { time: e.currentTarget.value, type: "scheduled" },
               });
             }}
-            className="w-8 h-8 p-2"
+            type="time"
+            className="w-full"
           />
         </div>
       )}

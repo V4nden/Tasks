@@ -1,26 +1,36 @@
 "use client";
 import SwipeContainer from "@/components/SwipeContainer";
 import Task from "@/components/Task/Task";
-import Tasks, { ITask } from "@/utils/store/Tasks";
-import { frame, motion } from "framer-motion";
+import Tasks, {
+  IOnetimeTaskType,
+  IScheduledTaskType,
+  ITask,
+  IUnscheduledTaskType,
+  TaskType,
+} from "@/utils/store/Tasks";
+import { motion } from "framer-motion";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import TasksActions from "./TasksActions";
-import { ITag } from "@/utils/store/Tags";
 import { makeAutoObservable } from "mobx";
 import TasksModification from "../TasksModification";
 import Popup from "@/components/ui/Popup";
-import uuid4 from "uuid4";
+import moment from "moment";
 
 class TasksPageActionsStore {
   filter: string[] = [];
-  task: { id: string; type: "scheduled" | "unscheduled" | "onetime" } | null =
-    null;
+  task: {
+    id: string;
+    type: TaskType;
+  } | null = null;
   constructor() {
     makeAutoObservable(this);
   }
   setTask(
-    task: { id: string; type: "scheduled" | "unscheduled" | "onetime" } | null
+    task: {
+      id: string;
+      type: TaskType;
+    } | null
   ) {
     this.task = task;
   }
@@ -34,6 +44,23 @@ export const TasksPageActions = new TasksPageActionsStore();
 type Props = {};
 
 const TasksPage = observer((props: Props) => {
+  const taskTypes: [
+    IScheduledTaskType,
+    IUnscheduledTaskType,
+    IOnetimeTaskType
+  ] = [
+    {
+      time: "12:00",
+      type: "scheduled",
+    },
+    {
+      type: "unscheduled",
+    },
+    {
+      date: moment().format("DD.MM.YYYY"),
+      type: "onetime",
+    },
+  ];
   useEffect(() => {
     document.oncontextmenu = (e) => {
       e.preventDefault();
@@ -41,16 +68,22 @@ const TasksPage = observer((props: Props) => {
   }, []);
   const [selectedType, setSelectedType] = useState(0);
   function sortTasks(a: ITask, b: ITask): number {
-    return (
-      (a.time
-        ? parseInt(a.time?.split(":")[0]) * 60 + parseInt(a.time?.split(":")[1])
-        : 0) +
-      100 / a.priority -
-      ((b.time
-        ? parseInt(b.time?.split(":")[0]) * 60 + parseInt(b.time?.split(":")[1])
-        : 0) +
-        100 / b.priority)
-    );
+    if (a.type.type == "scheduled" && b.type.type == "scheduled") {
+      return (
+        (a.type.time
+          ? parseInt(a.type.time.split(":")[0]) * 60 +
+            parseInt(a.type.time.split(":")[1])
+          : 0) +
+        100 / a.priority -
+        ((b.type.time
+          ? parseInt(b.type.time.split(":")[0]) * 60 +
+            parseInt(b.type.time.split(":")[1])
+          : 0) +
+          100 / b.priority)
+      );
+    } else {
+      return 100 / a.priority - 100 / b.priority;
+    }
   }
   function filteredStyles(task: ITask): string {
     return TasksPageActions.filter.length > 0
@@ -86,7 +119,7 @@ const TasksPage = observer((props: Props) => {
           >
             {Tasks.tasks
               .slice()
-              .filter((el) => el.type == "scheduled")
+              .filter((el) => el.type.type == "scheduled")
               .sort(sortTasks)
               .sort(sortByFilter)
               .map((task) => (
@@ -107,7 +140,7 @@ const TasksPage = observer((props: Props) => {
           >
             {Tasks.tasks
               .slice()
-              .filter((el) => el.type == "unscheduled")
+              .filter((el) => el.type.type == "unscheduled")
               .sort(sortTasks)
               .sort(sortByFilter)
               .map((task) => (
@@ -128,7 +161,7 @@ const TasksPage = observer((props: Props) => {
           >
             {Tasks.tasks
               .slice()
-              .filter((el) => el.type == "onetime")
+              .filter((el) => el.type.type == "onetime")
               .sort(sortTasks)
               .sort(sortByFilter)
               .map((task) => (
@@ -144,7 +177,7 @@ const TasksPage = observer((props: Props) => {
       <Popup
         title={`${
           Tasks.hasTask(String(TasksPageActions.task?.id)) ? "Edit" : "Create"
-        } ${["scheduled", "unscheduled", "onetime"][selectedType]} task`}
+        } ${taskTypes[selectedType].type} task`}
         opened={!!TasksPageActions.task}
         setOpened={() => {
           TasksPageActions.setTask(null);
@@ -157,10 +190,7 @@ const TasksPage = observer((props: Props) => {
           />
         )}
       </Popup>
-      <TasksActions
-        //@ts-ignore
-        selectedType={["scheduled", "unscheduled", "onetime"][selectedType]}
-      />
+      <TasksActions selectedType={taskTypes[selectedType]} />
     </main>
   );
 });
