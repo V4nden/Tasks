@@ -14,6 +14,7 @@ Tasks is a mobile application designed to help you remember and plan your daily 
     - **Priority**: Assign a priority level to each task, helping you focus on the most important ones first.
     - **Color**: Customize the color of each task to visually distinguish them.
     - **Tags**: Assign tags to tasks, making it easy to categorize and filter them.
+    - **Type**: Create scheduled, unscheduled and one-time tasks
 2.  **Customizable Tags**: Users can create their own tags, allowing for personalized task organization.
 3.  **Task Management**: Easily view, edit, and delete tasks as needed.
 
@@ -23,7 +24,7 @@ Tasks is a mobile application designed to help you remember and plan your daily 
 - [X] Improve task typing
 - [ ] Move to zustand instead of mobx
 - [X] One-time tasks
-- [ ] Sort and filter by tags, priority or time
+- [X] Sort and filter by tags, priority or time
 - [ ] Notifications
 - [ ] Home screen widget
 
