@@ -13,9 +13,9 @@ import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import TasksActions from "./TasksActions";
 import { makeAutoObservable } from "mobx";
-import TasksModification from "../TasksModification";
 import Popup from "@/components/ui/Popup";
 import moment from "moment";
+import TasksModification from "../TaskModification/TasksModification";
 
 class TasksPageActionsStore {
   filter: string[] = [];
