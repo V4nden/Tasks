@@ -26,6 +26,10 @@ export interface ITask {
   tags: string[];
   icon: string;
   id: string;
+  howlong?: {
+    started: number | null;
+    time: number | null;
+  };
   priority: number;
   type: TaskType;
 }

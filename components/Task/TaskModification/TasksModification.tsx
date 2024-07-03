@@ -8,6 +8,7 @@ import TaskModificationColorPicker from "./TaskModificationColorPicker";
 import TaskModificationScheduledTimePicker from "./Scheduled/TaskModificationScheduledTimePicker";
 import TaskModificationTagsPicker from "./TaskModificationTagsPicker";
 import TaskModificationPriorityPicker from "./TaskModificationPriorityPicker";
+import TaskModificationHowLong from "./TaskModificationHowLong";
 type Props = {
   id: string;
   type: TaskType;
@@ -50,7 +51,7 @@ const TasksModification = observer((props: Props) => {
         taskForm={taskForm}
         setTaskForm={setTaskForm}
       />
-
+      <TaskModificationHowLong taskForm={taskForm} setTaskForm={setTaskForm} />
       <TaskModificationTagsPicker
         taskForm={taskForm}
         setTaskForm={setTaskForm}

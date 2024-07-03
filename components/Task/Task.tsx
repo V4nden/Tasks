@@ -2,7 +2,7 @@ import { ITask } from "@/utils/store/Tasks";
 import React, { useEffect, useState } from "react";
 import Tag from "../ui/Tag";
 import * as Fa from "react-icons/fa";
-import moment from "moment";
+import moment, { Moment } from "moment";
 import History from "@/utils/store/History";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import Tags from "@/utils/store/Tags";
@@ -28,9 +28,19 @@ const Task = (props: Props) => {
   };
   const animate = useAnimation();
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNowdate(moment());
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   //@ts-ignore
   const Icon = Fa[props.icon];
-  const [pressed, setPressed] = useState(0);
+  const [nowdate, setNowdate] = useState<Moment>(moment());
   const [actionsVisible, setActionsVisible] = useState(false);
   const ref = React.createRef<HTMLDivElement>();
   const { est, my } = useSwipe(ref);
