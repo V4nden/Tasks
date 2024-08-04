@@ -59,7 +59,7 @@ const Task = (props: Props) => {
       layout="position"
       transition={{ duration: 0.3, ease: [0, 1, 0, 1] }}
       className={twMerge(
-        `border rounded-xl p-4 overflow-hidden border-zinc-800 flex select-none relative flex-col gap-2 justify-center transition-all ease-out ${
+        `border rounded-xl p-4 overflow-hidden border-zinc-800 flex select-none relative flex-col gap-2 justify-center transition-all ease-out z-30 ${
           props.className && props.className
         }`
       )}

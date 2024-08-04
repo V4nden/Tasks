@@ -16,6 +16,14 @@ import { makeAutoObservable } from "mobx";
 import Popup from "@/components/ui/Popup";
 import moment from "moment";
 import TasksModification from "../TaskModification/TasksModification";
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 class TasksPageActionsStore {
   filter: string[] = [];
@@ -66,7 +74,18 @@ const TasksPage = observer((props: Props) => {
       e.preventDefault();
     };
   }, []);
-  const [selectedType, setSelectedType] = useState(0);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    if (!carouselApi) {
+      return;
+    }
+    setCurrent(carouselApi.selectedScrollSnap());
+
+    carouselApi.on("select", () => {
+      setCurrent(carouselApi.selectedScrollSnap());
+    });
+  }, [carouselApi]);
   function sortTasks(a: ITask, b: ITask): number {
     if (a.type.type == "scheduled" && b.type.type == "scheduled") {
       return (
@@ -105,79 +124,74 @@ const TasksPage = observer((props: Props) => {
   }
   return (
     <main>
-      <SwipeContainer
-        frameActions={{ frame: selectedType, setFrame: setSelectedType }}
-        className="min-h-screen pb-16"
-        containerClassName="p-4"
-      >
-        {[
-          "Scheduled",
-          <motion.div
-            layoutRoot
-            key={"scheduled"}
-            className="flex-col gap-2 overflow-y-scrol flex"
-          >
-            {Tasks.tasks
-              .slice()
-              .filter((el) => el.type.type == "scheduled")
-              .sort(sortTasks)
-              .sort(sortByFilter)
-              .map((task) => (
-                <Task
-                  className={filteredStyles(task)}
-                  {...task}
-                  key={task.id}
-                />
-              ))}
-          </motion.div>,
-        ]}
-        {[
-          "Uncheduled",
-          <motion.div
-            layoutRoot
-            key={"uncheduled"}
-            className="flex-col gap-2 overflow-y-scrol flex"
-          >
-            {Tasks.tasks
-              .slice()
-              .filter((el) => el.type.type == "unscheduled")
-              .sort(sortTasks)
-              .sort(sortByFilter)
-              .map((task) => (
-                <Task
-                  className={filteredStyles(task)}
-                  {...task}
-                  key={task.id}
-                />
-              ))}
-          </motion.div>,
-        ]}
-        {[
-          "Onetime",
-          <motion.div
-            layoutRoot
-            key={"onetime"}
-            className="flex-col gap-2 overflow-y-scrol flex"
-          >
-            {Tasks.tasks
-              .slice()
-              .filter((el) => el.type.type == "onetime")
-              .sort(sortTasks)
-              .sort(sortByFilter)
-              .map((task) => (
-                <Task
-                  className={filteredStyles(task)}
-                  {...task}
-                  key={task.id}
-                />
-              ))}
-          </motion.div>,
-        ]}
-      </SwipeContainer>
+      <Carousel orientation="horizontal" setApi={setCarouselApi}>
+        <CarouselContent>
+          <CarouselItem>
+            <motion.div
+              layoutRoot
+              key={"scheduled"}
+              className="flex-col gap-2 flex min-h-screen p-4"
+            >
+              {Tasks.tasks
+                .slice()
+                .filter((el) => el.type.type == "scheduled")
+                .sort(sortTasks)
+                .sort(sortByFilter)
+                .map((task) => (
+                  <Task
+                    className={filteredStyles(task)}
+                    {...task}
+                    key={task.id}
+                  />
+                ))}
+            </motion.div>
+          </CarouselItem>
+          <CarouselItem>
+            <motion.div
+              layoutRoot
+              key={"uncheduled"}
+              className="flex-col gap-2 flex min-h-screen p-4"
+            >
+              {Tasks.tasks
+                .slice()
+                .filter((el) => el.type.type == "unscheduled")
+                .sort(sortTasks)
+                .sort(sortByFilter)
+                .map((task) => (
+                  <Task
+                    className={filteredStyles(task)}
+                    {...task}
+                    key={task.id}
+                  />
+                ))}
+            </motion.div>
+          </CarouselItem>
+          <CarouselItem>
+            <motion.div
+              layoutRoot
+              key={"onetime"}
+              className="flex-col gap-2 flex p-4"
+            >
+              {Tasks.tasks
+                .slice()
+                .filter((el) => el.type.type == "onetime")
+                .sort(sortTasks)
+                .sort(sortByFilter)
+                .map((task) => (
+                  <Task
+                    className={filteredStyles(task)}
+                    {...task}
+                    key={task.id}
+                  />
+                ))}
+            </motion.div>
+          </CarouselItem>
+        </CarouselContent>
+      </Carousel>
       <Popup
         title={`${
           Tasks.hasTask(String(TasksPageActions.task?.id)) ? "Edit" : "Create"
-        } ${taskTypes[selectedType].type} task`}
+        } ${taskTypes[current].type} task`}
         opened={!!TasksPageActions.task}
         setOpened={() => {
           TasksPageActions.setTask(null);
@@ -190,7 +204,7 @@ const TasksPage = observer((props: Props) => {
           />
         )}
       </Popup>
-      <TasksActions selectedType={taskTypes[selectedType]} />
+      <TasksActions selectedType={taskTypes[current]} />
     </main>
   );
 });

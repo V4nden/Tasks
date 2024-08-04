@@ -12,8 +12,13 @@
   "dependencies": {
     "@capacitor/android": "^6.0.0",
     "@capacitor/core": "^6.0.0",
+    "@radix-ui/react-slot": "^1.1.0",
     "@types/uuid4": "^2.0.3",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.1.8",
     "framer-motion": "^11.2.10",
+    "lucide-react": "^0.424.0",
     "mobx": "^6.12.3",
     "mobx-persist-store": "^1.1.5",
     "mobx-react-lite": "^4.0.7",
@@ -26,6 +31,8 @@
     "react-icons": "^5.2.1",
     "react-mobx": "^0.0.4",
     "recharts": "^2.12.7",
+    "tailwind-merge": "^2.4.0",
+    "tailwindcss-animate": "^1.0.7",
     "tw-merge": "^0.0.1-alpha.3",
     "uuid4": "^2.0.3"
   },
