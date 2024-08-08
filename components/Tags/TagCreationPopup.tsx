@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Popup from "../ui/Popup";
 import Tags, { ITag } from "@/utils/store/Tags";
 import uuid4 from "uuid4";
-import Input from "../ui/Input";
+import { Input } from "../ui/input";
 
 type Props = {};
 
@@ -16,7 +16,7 @@ const TagCreationPopup = (props: Props) => {
   return (
     <>
       <button
-        className="p-2 border border-zinc-800 rounded-xl w-full text-zinc-300"
+        className="p-2 border border-zinc-800 rounded-lg w-full text-zinc-300"
         onClick={(e) => setOpened(!opened)}
       >
         Create tag
@@ -30,7 +30,7 @@ const TagCreationPopup = (props: Props) => {
               setTagForm({ ...tagForm, name: e.currentTarget.value });
             }}
           />
-          <div className="flex border flex-wrap gap-2 justify-center p-2 rounded-xl bg-zinc-950 border-zinc-800">
+          <div className="flex border flex-wrap gap-2 justify-center p-2 rounded-lg bg-zinc-950 border-zinc-800">
             {[
               "#64748b",
               "#78716c",
@@ -68,7 +68,7 @@ const TagCreationPopup = (props: Props) => {
           </div>
         </div>
         <button
-          className="w-full p-2 border border-zinc-800 bg-zinc-950 rounded-xl text-zinc-100"
+          className="w-full p-2 border border-zinc-800 bg-zinc-950 rounded-lg text-zinc-100"
           onClick={(e) => {
             Tags.createTag(tagForm);
 

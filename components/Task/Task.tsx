@@ -59,7 +59,7 @@ const Task = (props: Props) => {
       layout="position"
       transition={{ duration: 0.3, ease: [0, 1, 0, 1] }}
       className={twMerge(
-        `border rounded-xl p-4 overflow-hidden border-zinc-800 flex select-none relative flex-col gap-2 justify-center transition-all ease-out z-30 ${
+        `border rounded-lg p-4 overflow-hidden border-zinc-800 flex select-none relative flex-col gap-2 justify-center transition-all ease-out z-30 ${
           props.className && props.className
         }`
       )}
@@ -75,7 +75,7 @@ const Task = (props: Props) => {
                 diff() > 0 ? (diff() > 60 ? "#525252" : "#06b6d4") : "#22c55e"
               }`,
             }}
-            className="text-zinc-100 font-bold text-sm flex gap-1 items-center justify-center border border-zinc-800 w-fit p-0.5 px-1 rounded-xl"
+            className="text-zinc-100 font-bold text-sm flex gap-1 items-center justify-center border border-zinc-800 w-fit p-0.5 px-2 rounded-lg"
           >
             <Fa.FaClock />
             {props.type.time}
@@ -91,7 +91,7 @@ const Task = (props: Props) => {
                 : "#a8a29e"
             }`,
           }}
-          className="text-zinc-100 font-bold text-sm flex gap-1 items-center justify-center border border-zinc-800 w-fit p-0.5 px-1 rounded-xl"
+          className="text-zinc-100 font-bold text-sm flex gap-1 items-center justify-center border border-zinc-800 w-fit p-0.5 px-2 rounded-lg"
         >
           <Fa.FaExclamationCircle />
           {props.priority}%

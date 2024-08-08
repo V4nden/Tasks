@@ -8,12 +8,12 @@ type Props = { taskForm: ITask; setTaskForm: Dispatch<SetStateAction<ITask>> };
 
 const TaskModificationTagsPicker = observer((props: Props) => {
   return (
-    <div className="flex flex-wrap border gap-2 w-full p-2 bg-zinc-950 rounded-xl border-zinc-800">
+    <div className="flex flex-wrap border gap-2 w-full p-2 bg-zinc-950 rounded-lg border-zinc-800">
       {Tags.tags.map((tag) => {
         return (
           <button
             key={tag.id}
-            className="rounded-xl flex items-center justify-center"
+            className="rounded-lg flex items-center justify-center"
             style={{ backgroundColor: tag.color }}
             onClick={(e) =>
               props.setTaskForm({

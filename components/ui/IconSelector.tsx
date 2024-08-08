@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
 import * as Fa from "react-icons/fa";
-import Input from "./Input";
+import { Input } from "@/components/ui/input";
 import iconFromId from "../../utils/iconFromId";
 type Props = {
   onSelected: Function;
@@ -17,7 +17,7 @@ const IconSelector = (props: Props) => {
   return (
     <>
       <button
-        className="p-2 border border-zinc-800 rounded-xl"
+        className="p-2 border border-zinc-800 rounded-lg"
         onClick={() => {
           setVisible((prev) => !prev);
         }}

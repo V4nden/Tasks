@@ -23,7 +23,7 @@ const ExportData = (props: Props) => {
   return (
     <>
       <button
-        className="p-2 border border-zinc-800 rounded-xl"
+        className="p-2 border border-zinc-800 rounded-lg"
         onClick={() => {
           setVisible((prev) => !prev);
         }}

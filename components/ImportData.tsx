@@ -13,7 +13,7 @@ const ImportData = (props: Props) => {
   return (
     <>
       <button
-        className="p-2 border border-zinc-800 rounded-xl"
+        className="p-2 border border-zinc-800 rounded-lg"
         onClick={() => {
           setVisible((prev) => !prev);
         }}
@@ -44,7 +44,7 @@ const ImportData = (props: Props) => {
               Tasks.fromImported(parsed);
               Tags.fromImported(parsed);
             }}
-            className="p-2 border border-zinc-800 w-full mb-16 rounded-xl"
+            className="p-2 border border-zinc-800 w-full mb-16 rounded-lg"
           >
             Submit
           </button>

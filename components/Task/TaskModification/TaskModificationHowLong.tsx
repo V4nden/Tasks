@@ -1,7 +1,7 @@
 import React from "react";
 import { ITask } from "@/utils/store/Tasks";
 import { Dispatch, SetStateAction } from "react";
-import Input from "@/components/ui/Input";
+import { Input } from "@/components/ui/input";
 type Props = { taskForm: ITask; setTaskForm: Dispatch<SetStateAction<ITask>> };
 
 const TaskModificationHowLong = (props: Props) => {

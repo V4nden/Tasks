@@ -28,7 +28,7 @@ const CreateTag = observer((props: Props) => {
   return (
     <>
       <button
-        className="p-2 border w-full text-lg border-zinc-800 rounded-xl"
+        className="p-2 border w-full text-lg border-zinc-800 rounded-lg"
         onClick={() => {
           setVisible((prev) => !prev);
         }}
@@ -67,7 +67,7 @@ const CreateTag = observer((props: Props) => {
             onClick={(e) => {
               Tags.createTag(tagForm);
             }}
-            className="border-zinc-800 border w-full p-2 rounded-xl bg-zinc-900"
+            className="border-zinc-800 border w-full p-2 rounded-lg bg-zinc-900"
           >
             Submit
           </button>

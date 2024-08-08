@@ -5,7 +5,7 @@ type Props = { taskForm: ITask; setTaskForm: Dispatch<SetStateAction<ITask>> };
 
 const TaskModificationColorPicker = (props: Props) => {
   return (
-    <div className="flex bg-zinc-950 border flex-wrap gap-2 justify-center p-2 rounded-xl border-zinc-800">
+    <div className="flex bg-zinc-950 border overflow-x-scroll scrollbar-hide w-full gap-2 justify-center p-2 rounded-lg border-zinc-800">
       {[
         "#ffffff",
         "#64748b",
@@ -28,7 +28,7 @@ const TaskModificationColorPicker = (props: Props) => {
       ].map((el) => {
         return (
           <button
-            className={`h-8 w-8 rounded-lg transition-all border-2 border-zinc-100 ease-out ${
+            className={`h-8 w-8 aspect-square rounded-lg transition-all border-2 border-zinc-100 ease-out ${
               el == props.taskForm.color
                 ? "border-opacity-100"
                 : "border-opacity-0"

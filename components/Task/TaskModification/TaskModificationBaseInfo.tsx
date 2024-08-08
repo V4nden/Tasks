@@ -1,5 +1,5 @@
 import IconSelector from "@/components/ui/IconSelector";
-import Input from "@/components/ui/Input";
+import { Input } from "@/components/ui/input";
 import { ITask } from "@/utils/store/Tasks";
 import React, { Dispatch, SetStateAction } from "react";
 

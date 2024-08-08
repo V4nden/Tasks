@@ -15,7 +15,7 @@ const TagsPage = observer((props: Props) => {
         return (
           <div
             style={{ background: el.color }}
-            className="flex justify-between items-center p-2 rounded-xl w-full border border-zinc-800"
+            className="flex justify-between items-center p-2 rounded-lg w-full border border-zinc-800"
             key={el.id}
           >
             <input

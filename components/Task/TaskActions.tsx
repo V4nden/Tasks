@@ -67,7 +67,7 @@ const TaskActions = observer((props: Props) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="absolute top-0 touch-none rounded-xl flex flex-wrap items-center justify-center left-0 text-zinc-100 bg-black/75 z-10 w-full h-full"
+          className="absolute top-0 touch-none rounded-lg flex flex-wrap items-center justify-center left-0 text-zinc-100 bg-black/75 z-10 w-full h-full"
           onTouchStart={(e) => {
             setSwipe(e.changedTouches[0].clientY);
           }}

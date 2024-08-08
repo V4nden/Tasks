@@ -2,7 +2,7 @@
 import ExportData from "@/components/ExportData";
 import ImportData from "@/components/ImportData";
 import IconSelector from "@/components/ui/IconSelector";
-import Input from "@/components/ui/Input";
+import { Input } from "@/components/ui/input";
 import Tag from "@/components/ui/Tag";
 import Tags from "@/utils/store/Tags";
 import Tasks, { ITask } from "@/utils/store/Tasks";

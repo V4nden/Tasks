@@ -1,14 +1,16 @@
+import { Input } from "@/components/ui/input";
 import { ITask } from "@/utils/store/Tasks";
+import { Slider } from "@radix-ui/react-slider";
 import { Dispatch, SetStateAction } from "react";
 type Props = { taskForm: ITask; setTaskForm: Dispatch<SetStateAction<ITask>> };
 
 const TaskModificationPriorityPicker = (props: Props) => {
   return (
-    <div className="p-2 border border-zinc-800 bg-zinc-950 w-full rounded-xl">
+    <div className="w-full rounded-lg">
       <p className="text-sm text-zinc-400 text-center">
         Priotity: {props.taskForm.priority}%
       </p>
-      <input
+      <Input
         type="range"
         value={props.taskForm.priority}
         onChange={(e) =>
@@ -21,7 +23,7 @@ const TaskModificationPriorityPicker = (props: Props) => {
       />
       <div className="flex gap-2 p-2">
         <button
-          className="p-2 border border-zinc-800 w-full rounded-xl"
+          className="p-2 border border-zinc-800 w-full rounded-lg"
           onClick={(e) => {
             props.setTaskForm({
               ...props.taskForm,
@@ -35,7 +37,7 @@ const TaskModificationPriorityPicker = (props: Props) => {
           -10
         </button>
         <button
-          className="p-2 border border-zinc-800 w-full rounded-xl"
+          className="p-2 border border-zinc-800 w-full rounded-lg"
           onClick={(e) => {
             props.setTaskForm({
               ...props.taskForm,
@@ -46,7 +48,7 @@ const TaskModificationPriorityPicker = (props: Props) => {
           Round
         </button>
         <button
-          className="p-2 border border-zinc-800 w-full rounded-xl"
+          className="p-2 border border-zinc-800 w-full rounded-lg"
           onClick={(e) => {
             props.setTaskForm({
               ...props.taskForm,

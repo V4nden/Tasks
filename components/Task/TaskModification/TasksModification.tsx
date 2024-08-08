@@ -69,7 +69,7 @@ const TasksModification = observer((props: Props) => {
 
           TasksPageActions.setTask(null);
         }}
-        className="p-2 border bg-zinc-950 border-zinc-800 w-full rounded-xl"
+        className="p-2 border bg-zinc-950 border-zinc-800 w-full rounded-lg"
       >
         Submit
       </button>

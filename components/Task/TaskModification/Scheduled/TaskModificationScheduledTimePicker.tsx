@@ -1,4 +1,4 @@
-import Input from "@/components/ui/Input";
+import { Input } from "@/components/ui/input";
 import { ITask } from "@/utils/store/Tasks";
 import { Dispatch, SetStateAction } from "react";
 type Props = { taskForm: ITask; setTaskForm: Dispatch<SetStateAction<ITask>> };
